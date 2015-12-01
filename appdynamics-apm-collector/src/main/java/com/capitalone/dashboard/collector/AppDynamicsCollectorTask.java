@@ -95,8 +95,7 @@ public class AppDynamicsCollectorTask extends CollectorTask<AppDynamicsCollector
 
 	private void clean(AppDynamicsCollector collector) {
 		Set<ObjectId> uniqueIDs = new HashSet<>();
-		for (com.capitalone.dashboard.model.Component comp : dbComponentRepository
-				.findAll()) {
+		for (com.capitalone.dashboard.model.Component comp : dbComponentRepository.findAll()) { //NOPMD
 			if (comp.getCollectorItems() != null && !comp.getCollectorItems().isEmpty()) {
 				List<CollectorItem> itemList = comp.getCollectorItems().get(
 						CollectorType.CodeQuality);
