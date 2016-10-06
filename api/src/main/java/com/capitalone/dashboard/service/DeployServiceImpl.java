@@ -27,6 +27,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -58,31 +60,46 @@ public class DeployServiceImpl implements DeployService {
 
     @Override
     public DataResponse<List<Environment>> getDeployStatus(ObjectId componentId) {
+    	List<Environment> environments = new ArrayList<>();
+    	long lastExecuted = 0;
         Component component = componentRepository.findOne(componentId);
-        CollectorItem item = component.getCollectorItems()
-                .get(CollectorType.Deployment).get(0);
-        ObjectId collectorItemId = item.getId();
-
-        List<EnvironmentComponent> components = environmentComponentRepository
-                .findByCollectorItemId(collectorItemId);
-        List<EnvironmentStatus> statuses = environmentStatusRepository
-                .findByCollectorItemId(collectorItemId);
-
-        List<Environment> environments = new ArrayList<>();
-        for (Map.Entry<Environment, List<EnvironmentComponent>> entry : groupByEnvironment(
-                components).entrySet()) {
-            Environment env = entry.getKey();
-            environments.add(env);
-            for (EnvironmentComponent envComponent : entry.getValue()) {
-                env.getUnits().add(
-                        new DeployableUnit(envComponent, servers(envComponent,
-                                statuses)));
-            }
+        
+        Collection<CollectorItem> cis = component.getCollectorItems()
+                .get(CollectorType.Deployment);
+        
+        if (cis == null) {
+            return new DataResponse<>(environments, new Date().getTime());
         }
-
-        Collector collector = collectorRepository
-                .findOne(item.getCollectorId());
-        return new DataResponse<>(environments, collector.getLastExecuted());
+        
+        // We will assume that if the component has multiple deployment collectors
+        // then each collector will have a different url
+        for (CollectorItem item : cis) {
+	        ObjectId collectorItemId = item.getId();
+	
+	        List<EnvironmentComponent> components = environmentComponentRepository
+	                .findByCollectorItemId(collectorItemId);
+	        List<EnvironmentStatus> statuses = environmentStatusRepository
+	                .findByCollectorItemId(collectorItemId);
+	
+	        for (Map.Entry<Environment, List<EnvironmentComponent>> entry : groupByEnvironment(
+	                components).entrySet()) {
+	            Environment env = entry.getKey();
+	            environments.add(env);
+	            for (EnvironmentComponent envComponent : entry.getValue()) {
+	                env.getUnits().add(
+	                        new DeployableUnit(envComponent, servers(envComponent,
+	                                statuses)));
+	            }
+	        }
+	
+	        Collector collector = collectorRepository
+	                .findOne(item.getCollectorId());
+	        
+	        if (collector.getLastExecuted() > lastExecuted) {
+	        	lastExecuted = collector.getLastExecuted();
+	        }
+        }
+        return new DataResponse<>(environments, lastExecuted);
     }
 
     private Map<Environment, List<EnvironmentComponent>> groupByEnvironment(
