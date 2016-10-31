@@ -70,6 +70,9 @@ dbpassword=${HYGIEIA_API_ENV_SPRING_DATA_MONGODB_PASSWORD:-dbpass}
 #Collector schedule (required)
 jenkins.cron=${JENKINS_CRON:-0 0/5 * * * *}
 
+#The page size
+jenkins.pageSize=${JENKINS_PAGE_SIZE:-1000}
+
 #Jenkins server (required) - Can provide multiple
 jenkins.servers[0]=${JENKINS_MASTER:-http://jenkins.company.com}
 
