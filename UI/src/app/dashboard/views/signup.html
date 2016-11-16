@@ -17,10 +17,11 @@
                     User created successfully
                 </div>
 
-                <form-group input="id" errors="{exists:'User already exists', required:'Username is required'}">
+                <form-group input="id" errors="{exists:'User already exists', ldap:'LDAP authentication enabled. Cannot create account', required:'Username is required', minlength: 'Username should be a min length of 4 characters'}">
                     <input type="text"
                            class="form-control text-center"
                            ng-model="signup.id"
+                           minlength="4"
                            name="id"
                            placeholder="Enter your username"
                            autocomplete="off"

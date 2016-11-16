@@ -1,5 +1,6 @@
 package com.capitalone.dashboard.service;
 
+import com.capitalone.dashboard.ApiSettings;
 import com.capitalone.dashboard.model.Authentication;
 import com.capitalone.dashboard.repository.AuthenticationRepository;
 import org.junit.Test;
@@ -21,6 +22,7 @@ import static org.mockito.Mockito.when;
 public class AuthenticationServiceTest {
 
     @Mock AuthenticationRepository authRepo;
+    @Mock ApiSettings apiSettings;
     @InjectMocks AuthenticationServiceImpl authService;
 
     @Test

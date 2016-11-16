@@ -27,6 +27,20 @@ dbusername=${SPRING_DATA_MONGODB_USERNAME:-db}
 #Database Password - default is blank
 dbpassword=${SPRING_DATA_MONGODB_PASSWORD:-dbpass}
 
+#LDAP server URL (required if systemConfig.ldapAuthentication=true)
+ldapUrl=${LDAP_URL:-ldap://localhost:389}
+#LDAP base directory to search users from (not required, Example: 'ou=People')
+ldapBase=${LDAP_BASE}
+#Distinguished Name to use for binding (not required if LDAP server supports anonymous binding, Example: 'cn=user,dc=company,dc=com')
+ldapBindDn=${LDAP_BIND_DN}
+#Password for the above DN
+ldapBindPassword=${LDAP_BIND_PASSWORD}
+#The username attribute to use as search filter (not required, defaults to 'uid')
+ldapUsernameAttribute=${LDAP_USERNAME_ATTRIBUTE}
+#Property to indicate how to handle referrals (not required, Can be 'ignore', 'follow' or 'throw')
+ldapReferral=${LDAP_REFERRAL}
+
 feature.dynamicPipeline=${FEATURE_DYNAMIC_PIPELINE:-disabled}
 systemConfig.multipleDeploymentServers=${CONFIG_GLOBAL_MULTIPLE_DEPLOYMENT_SERVERS:-false}
+systemConfig.ldapAuthentication=${CONFIG_GLOBAL_LDAP_AUTHENTICATION:-false}
 EOF

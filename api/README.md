@@ -32,6 +32,21 @@ dbhostport=[host1:port1,host2:port2,host3:port3]
 server.contextPath=[Web Context path if any]
 server.port=[Web server port - default is 8080]
 version.number=@application.version.number@
+
+# Enable or disable LDAP authentication (disabled by default for backward compatibility)
+systemConfig.ldapAuthentication=false
+# LDAP server URL (required if systemConfig.ldapAuthentication=true)
+ldapUrl=ldap://localhost:389
+# LDAP base directory to search users from (not required, Example: 'ou=People')
+ldapBase=ou=People
+# Distinguished Name to use for binding (not required if LDAP server supports anonymous binding, Example: 'cn=user,dc=company,dc=com')
+ldapBindDn=cn=user,dc=company,dc=com
+# Password for the above DN
+ldapBindPassword=secret
+# The username attribute to use as search filter (not required, defaults to 'uid')
+ldapUsernameAttribute=uid
+# Property to indicate how to handle referrals (not required, Can be 'ignore', 'follow' or 'throw')
+ldapReferral=ignore
 ```
 
 All the above values are optional. Even without the property file you must be able to run the api (assuming you have mongodb installed with no authorization).

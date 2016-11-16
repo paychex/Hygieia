@@ -14,6 +14,13 @@ public class ApiSettings {
     private String key;
     private boolean logRequest;
     
+    private String ldapUrl;
+    private String ldapBase;
+    private String ldapReferral;
+    private String ldapBindDn;
+    private String ldapBindPassword;
+    private String ldapUsernameAttribute;
+    
     // Start global config
     /*
      * Location to place configurations that are consumed by the UI and API. May be moved into a separate location
@@ -21,6 +28,9 @@ public class ApiSettings {
      */
     @Value("${systemConfig.multipleDeploymentServers:false}")
     private boolean multipleDeploymentServers;
+    
+    @Value("${systemConfig.ldapAuthentication:false}")
+    private boolean ldapAuthentication;
     // End global config
     
     public String getKey() {
@@ -39,7 +49,59 @@ public class ApiSettings {
         this.logRequest = logRequest;
     }
     
+    public String getLdapUrl() {
+        return ldapUrl;
+    }
+
+    public void setLdapUrl(final String ldapUrl) {
+        this.ldapUrl = ldapUrl;
+    }
+    
+    public String getLdapBase() {
+        return ldapBase;
+    }
+
+    public void setLdapBase(final String ldapBase) {
+        this.ldapBase = ldapBase;
+    }
+    
+    public String getLdapReferral() {
+        return ldapReferral;
+    }
+
+    public void setLdapReferral(final String ldapReferral) {
+        this.ldapReferral = ldapReferral;
+    }
+    
+    public String getLdapBindDn() {
+        return ldapBindDn;
+    }
+
+    public void setLdapBindDn(final String ldapBindDn) {
+        this.ldapBindDn = ldapBindDn;
+    }
+    
+    public String getLdapBindPassword() {
+        return ldapBindPassword;
+    }
+
+    public void setLdapBindPassword(final String ldapBindPassword) {
+        this.ldapBindPassword = ldapBindPassword;
+    }
+    
+    public String getLdapUsernameAttribute() {
+        return ldapUsernameAttribute;
+    }
+
+    public void setLdapUsernameAttribute(final String ldapUsernameAttribute) {
+        this.ldapUsernameAttribute = ldapUsernameAttribute;
+    }
+    
     public boolean isMultipleDeploymentServers() {
     	return multipleDeploymentServers;
+    }
+    
+    public boolean isLdapAuthentication() {
+    	return ldapAuthentication;
     }
 }

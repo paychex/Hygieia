@@ -3,8 +3,8 @@
 (function () {
     'use strict';
     var app = angular.module(HygieiaConfig.module)
-    var inject = ['$cookies', '$http', '$location', '$scope', 'loginData']
-    function LoginController($cookies, $http, $location, $scope, loginData) {
+    var inject = ['$cookies', '$http', '$location', '$scope', '$timeout', 'loginData', 'systemConfigData', '$q']
+    function LoginController($cookies, $http, $location, $scope, $timeout, loginData, systemConfigData, $q) {
         if ($cookies.authenticated) {
             $location.path('/site');
             return;
@@ -18,6 +18,16 @@
         login.invalidUsernamePassword = false;
         login.appVersion='';
 
+        login.ldapAuthentication = true;
+        
+        $q.when(systemConfigData.config())
+    		.then(function(dataA) {		
+    			var systemConfig = dataA;
+    			
+    			if (systemConfig.globalProperties && "ldapAuthentication" in systemConfig.globalProperties) {
+    				login.ldapAuthentication=systemConfig.globalProperties.ldapAuthentication
+    			}
+    		});  
 
         login.doLogin = function () {
             $scope.lg.username.$setValidity('invalidUsernamePassword', true);

@@ -40,9 +40,12 @@
         }
 
         function processResponse(data) {
-            var exists = data == 'User already exists';
-            $scope.suf.id.$setValidity('exists', !exists);
-            signup.userCreated = !exists;
+            signup.userCreated = !((data === 'User already exists') || (data === 'LDAP authentication enabled'));
+            if (data === 'User already exists') {
+            	$scope.suf.id.$setValidity('exists', false);
+            } else if (data === 'LDAP authentication enabled') {
+            	$scope.suf.id.$setValidity('ldap', false);
+            }
         }
 
     }

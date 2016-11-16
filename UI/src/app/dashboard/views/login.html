@@ -36,7 +36,7 @@
                         Log in
                     </button>
                 </div>
-                <div class="gap text-center">
+                <div class="gap text-center" ng-if="!login.ldapAuthentication">
                     <p>Don't have an account?</p>
                     <div class="btn btn-link btn-wide"
                         ng-click="login.doSignup()">
