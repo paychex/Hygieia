@@ -14,5 +14,5 @@ WORKDIR /hygieia
 VOLUME ["/hygieia/logs"]
 
 CMD ./jenkins-build-properties-builder.sh && \
-  java -jar bamboo-build-collector*.jar --spring.config.location=/hygieia/hygieia-bamboo-build-collector.properties
+  java -Djava.security.egd=file:/dev/./urandom -Djasypt.encryptor.password=$JASYPT_ENCRYPTOR_SECRET -jar bamboo-build-collector*.jar --spring.config.location=/hygieia/hygieia-bamboo-build-collector.properties
 

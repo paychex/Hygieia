@@ -14,5 +14,5 @@ WORKDIR /hygieia
 VOLUME ["/hygieia/logs"]
 
 CMD ./xldeploy-properties-builder.sh && \
-  java -jar xldeploy-deployment-collector*.jar --spring.config.location=/hygieia/hygieia-xldeploy-deployment-collector.properties
+  java -Djava.security.egd=file:/dev/./urandom -Djasypt.encryptor.password=$JASYPT_ENCRYPTOR_SECRET -jar xldeploy-deployment-collector*.jar --spring.config.location=/hygieia/hygieia-xldeploy-deployment-collector.properties
 

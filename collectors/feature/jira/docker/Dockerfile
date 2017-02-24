@@ -15,4 +15,4 @@ WORKDIR /hygieia/
 VOLUME ["/hygieia/logs"]
 
 CMD ./jira-properties-builder.sh &&\
-	 java -jar jira-feature-collector*.jar --spring.config.location=hygieia-jira-feature-collector.properties
+	 java -Djava.security.egd=file:/dev/./urandom -Djasypt.encryptor.password=$JASYPT_ENCRYPTOR_SECRET -jar jira-feature-collector*.jar --spring.config.location=hygieia-jira-feature-collector.properties

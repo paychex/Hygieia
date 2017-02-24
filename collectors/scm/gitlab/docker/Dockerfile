@@ -14,5 +14,5 @@ WORKDIR /hygieia
 VOLUME ["/hygieia/logs"]
 
 CMD ./gitlab-properties-builder.sh && \
-  java -jar gitlab-git-collector*.jar --spring.config.location=/hygieia/hygieia-gitlab-git-collector.properties
+  java -Djava.security.egd=file:/dev/./urandom -Djasypt.encryptor.password=$JASYPT_ENCRYPTOR_SECRET -jar gitlab-git-collector*.jar --spring.config.location=/hygieia/hygieia-gitlab-git-collector.properties
 

@@ -14,5 +14,5 @@ WORKDIR /hygieia
 VOLUME ["/hygieia/logs"]
 
 CMD ./jenkins-cucumber-test-properties-builder.sh && \
-  java -jar jenkins-cucumber-test-collector*.jar --spring.config.location=/hygieia/hygieia-jenkins-cucumber-test-collector.properties
+  java -Djava.security.egd=file:/dev/./urandom -Djasypt.encryptor.password=$JASYPT_ENCRYPTOR_SECRET -jar jenkins-cucumber-test-collector*.jar --spring.config.location=/hygieia/hygieia-jenkins-cucumber-test-collector.properties
 

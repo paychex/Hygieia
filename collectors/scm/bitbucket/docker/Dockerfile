@@ -14,5 +14,5 @@ WORKDIR /hygieia
 VOLUME ["/hygieia/logs"]
 
 CMD ./bitbucket-properties-builder.sh && \
-  java -jar bitbucket-scm-collector*.jar --spring.config.location=/hygieia/hygieia-bitbucket-scm-collector.properties
+  java -Djava.security.egd=file:/dev/./urandom -Djasypt.encryptor.password=$JASYPT_ENCRYPTOR_SECRET -jar bitbucket-scm-collector*.jar --spring.config.location=/hygieia/hygieia-bitbucket-scm-collector.properties
 

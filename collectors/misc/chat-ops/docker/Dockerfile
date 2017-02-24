@@ -14,5 +14,5 @@ WORKDIR /hygieia
 VOLUME ["/hygieia/logs"]
 
 CMD ./chat-ops-properties-builder.sh && \
-  java -jar chat-ops-collector*.jar --spring.config.location=/hygieia/hygieia-chat-ops-collector.properties
+  java -Djava.security.egd=file:/dev/./urandom -Djasypt.encryptor.password=$JASYPT_ENCRYPTOR_SECRET -jar chat-ops-collector*.jar --spring.config.location=/hygieia/hygieia-chat-ops-collector.properties
 

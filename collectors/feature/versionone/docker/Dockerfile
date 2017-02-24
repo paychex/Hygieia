@@ -14,5 +14,5 @@ WORKDIR /hygieia
 VOLUME ["/hygieia/logs"]
 
 CMD ./versionone-properties-builder.sh && \
-  java -jar versionone-feature-collector*.jar --spring.config.location=/hygieia/hygieia-versionone-feature-collector.properties
+  java -Djava.security.egd=file:/dev/./urandom -Djasypt.encryptor.password=$JASYPT_ENCRYPTOR_SECRET -jar versionone-feature-collector*.jar --spring.config.location=/hygieia/hygieia-versionone-feature-collector.properties
 
